@@ -13,7 +13,7 @@ import random
 
 
 
-bot = telebot.TeleBot('5532392578:AAFdxzuyJggwciDdAkm9mPAv1xfMfzsA3ao')
+bot = telebot.TeleBot('5306102005:AAHUvZCTAXSj3F8TCTmGbR5xFUr_J2Tdr34')
 
 
 #команды
@@ -22,7 +22,7 @@ bot = telebot.TeleBot('5532392578:AAFdxzuyJggwciDdAkm9mPAv1xfMfzsA3ao')
 def command(message, res=False):
     chat_id = message.chat.id
     bot.send_sticker(chat_id, "CAACAgIAAxkBAAEEkq9iaT_FQTC2XiYqEMXDaZicoSlafQACmxIAAkesoUshgGwRAAF2MPYkBA")
-    txt_message = f"Привет, {message.from_user.first_name}! Я ProstoBot! Чем я могу вам помочь? Выбирите пункт!"
+    txt_message = f"Привет, {message.from_user.first_name}! Я ProstoBot! Выберите действие:"
     bot.send_message(chat_id, text=txt_message, reply_markup=Menu.getMenu(chat_id, "Главное меню").markup)
 
 
@@ -115,8 +115,10 @@ def get_text_messages(message):
     subMenu = menuBot.goto_menu(bot, chat_id, ms_text)  # попытаемся использовать текст как команду меню, и войти в него
     if subMenu != None:
         if subMenu.name == "Камень, ножницы, бумага, ящерица, Спок":
-            DameRSLPS.info_RSPLS(bot, chat_id)
-
+            gameRSPLS.info_RSPLS(bot, chat_id)
+        elif subMenu.name == "Виселица":
+            gameW = botGames.newGame(chat_id, botGames.Word_game(bot, chat_id))
+            gameW.word_start()
         return  # мы вошли в подменю, и дальнейшая обработка не требуется
 
     # проверим, является ли текст текущий команды кнопкой действия
@@ -139,14 +141,7 @@ def get_text_messages(message):
             bot.send_message(chat_id, text=get_password())
         elif ms_text == "Прислать игру":
             send_game(chat_id)
-        elif ms_text == "Камень" or ms_text == "Ножницы" or ms_text == "Бумага" or ms_text == "Ящерица" or ms_text == "Спок":
-            gameRSPLS.game_RSPLS(bot, chat_id, message)
-        elif ms_text == "Попытка":
-            gameW = botGames.getGame(chat_id)
-            if gameW == None:  # если мы случайно попали в это меню, а объекта с игрой нет
-                menuBot.goto_menu(bot, chat_id, "Выход")
-                return
-            gameW.input_letter()
+
 
 
         # ======================================= модуль ДЗ
@@ -195,7 +190,7 @@ def send_help(chat_id):
     global bot
     bot.send_message(chat_id, "Автор: Большаков Георгий")
     markup = types.InlineKeyboardMarkup()
-    btn1 = types.InlineKeyboardButton(text="Напишите автору", url="https://t.me/Dfenia")
+    btn1 = types.InlineKeyboardButton(text="Напишите автору", url="https://t.me/DFenia")
     markup.add(btn1)
     img = open('кот1.jpg', 'rb')
     bot.send_photo(chat_id, img, reply_markup=markup)
