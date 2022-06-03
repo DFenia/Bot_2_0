@@ -10,14 +10,14 @@ from telebot import types
 
 
 def dz1(bot, chat_id):
-    name = "Евгения"
+    name = "..."
     bot.send_message(chat_id, text = name)
 def dz2(bot, chat_id):
-    name = "Евгения"
-    age = 19
+    name = "..."
+    age = 18
     bot.send_message(chat_id, text = f"Здравствуйте! Меня зовут {name}, мне {age} лет.")
 def dz3(bot, chat_id):
-    name = "Евгения"
+    name = "..."
     bot.send_message(chat_id, text = name + name + name )
     bot.send_message(chat_id, text = name * 5)
 def dz45(bot, chat_id):
