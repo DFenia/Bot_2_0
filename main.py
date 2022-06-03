@@ -9,7 +9,7 @@ import requests
 import menuBot
 from menuBot import Menu, Users
 import random
-import botGames
+
 
 
 
@@ -22,7 +22,7 @@ bot = telebot.TeleBot('5532392578:AAFdxzuyJggwciDdAkm9mPAv1xfMfzsA3ao')
 def command(message, res=False):
     chat_id = message.chat.id
     bot.send_sticker(chat_id, "CAACAgIAAxkBAAEEkq9iaT_FQTC2XiYqEMXDaZicoSlafQACmxIAAkesoUshgGwRAAF2MPYkBA")
-    txt_message = f"Привет, {message.from_user.first_name}! Я тестовый бот для курса программирования на языке Python"
+    txt_message = f"Привет, {message.from_user.first_name}! Я ProstoBot! Чем я могу вам помочь? Выбирите пункт!"
     bot.send_message(chat_id, text=txt_message, reply_markup=Menu.getMenu(chat_id, "Главное меню").markup)
 
 
@@ -115,10 +115,8 @@ def get_text_messages(message):
     subMenu = menuBot.goto_menu(bot, chat_id, ms_text)  # попытаемся использовать текст как команду меню, и войти в него
     if subMenu != None:
         if subMenu.name == "Камень, ножницы, бумага, ящерица, Спок":
-            gameRSPLS.info_RSPLS(bot, chat_id)
-        elif subMenu.name == "Виселица":
-            gameW = botGames.newGame(chat_id, botGames.Word_game(bot, chat_id))
-            gameW.word_start()
+            DameRSLPS.info_RSPLS(bot, chat_id)
+
         return  # мы вошли в подменю, и дальнейшая обработка не требуется
 
     # проверим, является ли текст текущий команды кнопкой действия
@@ -149,17 +147,6 @@ def get_text_messages(message):
                 menuBot.goto_menu(bot, chat_id, "Выход")
                 return
             gameW.input_letter()
-        elif ms_text == "Другое слово":
-            gameW = botGames.newGame(chat_id, botGames.Word_game(bot, chat_id))
-            gameW.word_start()
-        elif ms_text == "Правила":
-            info_word = "Правила\n\nБот загадывает слово\n" \
-                        "Игрок должен угадывать его либо, по одной букве, либо все слово сразу\n" \
-                        "Если игрок называет букву, которое есть в слова, она появляется\n" \
-                        "Если нет, то это приближает игрока к казни\n" \
-                        "Есть 8 шансов на ошибку, после чего игра заканчивается."
-            img = open('v.jpeg', 'rb')
-            bot.send_photo(chat_id, img, caption=info_word)
 
 
         # ======================================= модуль ДЗ
@@ -206,9 +193,9 @@ def goto_menu(chat_id, name_menu):
 
 def send_help(chat_id):
     global bot
-    bot.send_message(chat_id, "Авторы: Большаков Георгий и Козлов Павел")
+    bot.send_message(chat_id, "Автор: Большаков Георгий")
     markup = types.InlineKeyboardMarkup()
-    btn1 = types.InlineKeyboardButton(text="Напишите автору", url="https://t.me/pasha_ik")
+    btn1 = types.InlineKeyboardButton(text="Напишите автору", url="https://t.me/Dfenia")
     markup.add(btn1)
     img = open('кот1.jpg', 'rb')
     bot.send_photo(chat_id, img, reply_markup=markup)
