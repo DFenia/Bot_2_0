@@ -188,7 +188,7 @@ def goto_menu(chat_id, name_menu):
 
 def send_help(chat_id):
     global bot
-    bot.send_message(chat_id, "Автор: Большаков Георгий")
+    bot.send_message(chat_id, "Автор: DFenia")
     markup = types.InlineKeyboardMarkup()
     btn1 = types.InlineKeyboardButton(text="Напишите автору", url="https://t.me/DFenia")
     markup.add(btn1)
