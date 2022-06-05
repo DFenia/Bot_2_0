@@ -6,7 +6,7 @@ import bs4
 import telebot
 from telebot import types
 import requests
-
+import VS
 import DZ
 import menuBot
 from menuBot import Menu, Users
@@ -161,6 +161,20 @@ def get_text_messages(message):
 
         elif ms_text == "Задание-6":
             DZ.dz6(bot, chat_id)
+
+
+
+        # ======================================= вышмат
+        elif ms_text == "Функции":
+            VS.f(bot, chat_id)
+
+        elif ms_text == "Интеграл":
+            VS.int(bot, chat_id)
+
+        elif ms_text == "Теоремы":
+            VS.t(bot, chat_id)
+
+
         # ======================================= случайный текст
     else:
         bot.send_message(chat_id, text="Мне жаль, я не понимаю вашу команду: " + ms_text)
