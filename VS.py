@@ -8,7 +8,7 @@ def f(bot, chat_id):
     name = "t"
     bot.send_message(chat_id, text = name)
 
-def int(bot, chat_id):
+def i(bot, chat_id):
     name = "i"
     bot.send_message(chat_id, text = name)
 
