@@ -6,6 +6,8 @@ import bs4
 import telebot
 from telebot import types
 import requests
+
+import DZ
 import menuBot
 from menuBot import Menu, Users
 import random
