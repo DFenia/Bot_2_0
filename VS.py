@@ -5,13 +5,13 @@ import telebot
 from telebot import types
 
 def f(bot, chat_id):
-    name = "t"
+    name = "teorema"
     bot.send_message(chat_id, text = name)
 
-def i(bot, chat_id):
-    name = "i"
-    bot.send_message(chat_id, text = name)
+def integral(bot, chat_id):
+    name = "integral"
+    bot.send_message(chat_id, text=name)
 
 def t(bot, chat_id):
-    name = "f"
+    name = "function"
     bot.send_message(chat_id, text = name)

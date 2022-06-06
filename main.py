@@ -169,7 +169,7 @@ def get_text_messages(message):
             VS.f(bot, chat_id)
 
         elif ms_text == "Интеграл":
-            VS.i(bot, chat_id)
+            VS.integral(bot, chat_id)
 
         elif ms_text == "Теоремы":
             VS.t(bot, chat_id)
