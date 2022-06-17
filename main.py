@@ -1,6 +1,4 @@
 import json
-from gettext import find
-from io import BytesIO
 import bs4
 import telebot
 from telebot import types

@@ -6,11 +6,8 @@ from telebot import types
 
 
 
-
-
-
 def dz1(bot, chat_id):
-    name = "..."
+    name = "Привет! Тебя зовут"
     bot.send_message(chat_id, text = name)
 def dz2(bot, chat_id):
     name = "..."
