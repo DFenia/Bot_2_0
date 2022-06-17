@@ -1,25 +1,19 @@
 import json
 from gettext import find
 from io import BytesIO
-
 import bs4
 import telebot
 from telebot import types
 import requests
-import VS
 import DZ
 import menuBot
 from menuBot import Menu, Users
 import random
 
 
-
-
 bot = telebot.TeleBot('5306102005:AAHUvZCTAXSj3F8TCTmGbR5xFUr_J2Tdr34')
 
-
-#команды
-
+#команда start
 @bot.message_handler(commands="start")
 def command(message, res=False):
     chat_id = message.chat.id
@@ -27,9 +21,7 @@ def command(message, res=False):
     txt_message = f"Привет, {message.from_user.first_name}! Я ProstoBot! Выберите действие:"
     bot.send_message(chat_id, text=txt_message, reply_markup=Menu.getMenu(chat_id, "Главное меню").markup)
 
-
-#получение
-
+#определение файла, который прислал пользователь
 @bot.message_handler(content_types=['sticker'])
 def get_messages(message):
     chat_id = message.chat.id
@@ -37,7 +29,6 @@ def get_messages(message):
 
     sticker = message.sticker
     bot.send_message(message.chat.id, sticker)
-
 
 @bot.message_handler(content_types=['audio'])
 def get_messages(message):
@@ -130,20 +121,15 @@ def get_text_messages(message):
         if ms_text == "Помощь":
             send_help(chat_id)
 
-        # ======================================= Развлечения
+        # ======================================= модуль Развлечения
         elif ms_text == "Прислать собаку":
             bot.send_photo(chat_id, photo=get_dogURL(), caption="Вот тебе собачка!")
         elif ms_text == "Прислать котика":
             bot.send_photo(chat_id, photo=get_catURL(), caption="Вот тебе котик!")
         elif ms_text == "Человек и email":
             get_personURL(chat_id)
-        elif ms_text == "Прислать анекдот":
-            bot.send_message(chat_id, text=get_anekdot())
-        elif ms_text == "Создать пароль":
-            bot.send_message(chat_id, text=get_password())
         elif ms_text == "Прислать игру":
             send_game(chat_id)
-
 
 
         # ======================================= модуль ДЗ
@@ -163,31 +149,16 @@ def get_text_messages(message):
             DZ.dz6(bot, chat_id)
 
 
-
-        # ======================================= вышмат
-        elif ms_text == "Функции":
-            VS.f(bot, chat_id)
-
-        elif ms_text == "Интеграл":
-            VS.integral(bot, chat_id)
-
-        elif ms_text == "Теоремы":
-            VS.t(bot, chat_id)
-
-
         # ======================================= случайный текст
     else:
         bot.send_message(chat_id, text="Мне жаль, я не понимаю вашу команду: " + ms_text)
         menuBot.goto_menu(bot, chat_id, "Главное меню")
 
 
-
 # ----------------------------------------------------------------------------------------------------------------------
 @bot.callback_query_handler(func=lambda call: True)
 def callback_worker(call): # передать параметры
     pass
-
-
 
 
 # ----------------------------------------------------------------------------------------------------------------------
@@ -202,6 +173,7 @@ def goto_menu(chat_id, name_menu):
     else:
         return False
 
+#----------------------------------------- модуль Помощь
 def send_help(chat_id):
     global bot
     bot.send_message(chat_id, "Автор: DFenia")
@@ -211,6 +183,7 @@ def send_help(chat_id):
     img = open('кот1.jpg', 'rb')
     bot.send_photo(chat_id, img, reply_markup=markup)
 
+#---------------------------------------- модуль Случайная игра
 def send_game(chat_id):
 
     url = "https://store.steampowered.com/explore/random/"
@@ -258,6 +231,7 @@ def send_game(chat_id):
     info_list[i] = "выхода:"
     info_list.append("\nЦена: ")
     info_list.append(prise)
+
 #отзывы
     rev = soup.find('div', class_="summary_section").getText()
     rev_list = str(rev)
@@ -266,36 +240,13 @@ def send_game(chat_id):
 
     info_list.append(rev_list)
 
-
-
-
     info = " ".join(info_list)
     markup = types.InlineKeyboardMarkup()
     btn1 = types.InlineKeyboardButton(text="Ссылка на игру", url=steam_url)
     markup.add(btn1)
     bot.send_photo(chat_id, photo=picture, caption=info, reply_markup=markup)
 
-
-def get_anekdot():
-    array_anekdots = []
-    req_anek = requests.get('http://anekdotme.ru/random')
-    soup = bs4.BeautifulSoup(req_anek.text, "html.parser")
-    result_find = soup.select('.anekdot_text')
-    for result in result_find:
-        array_anekdots.append(result.getText().strip())
-    return array_anekdots[0]
-
-
-def get_password():
-    array_facts = []
-    req_fact = requests.get('https://randstuff.ru/password/')
-    soup = bs4.BeautifulSoup(req_fact.text, "html.parser")
-    result_find = soup.select('.cur')
-    for result in result_find:
-        array_facts.append(result.getText().strip())
-    return array_facts[0]
-
-
+#---------------------------------------- модуль Случайное фото собаки
 def get_dogURL():
     url = ""
     req = requests.get('https://random.dog/woof.json')
@@ -304,6 +255,7 @@ def get_dogURL():
         url = r_json['url']
     return url
 
+#---------------------------------------- модуль Случайное фото кота
 def get_catURL():
     url = ""
     req = requests.get("https://api.thecatapi.com/v1/images/search")
@@ -312,6 +264,7 @@ def get_catURL():
         url = r_json[0]["url"]
     return url
 
+#---------------------------------------- модуль Случайный человек и почта
 def get_personURL(chat_id):
     """url = ""
     req = requests.get('https://api.thecatapi.com/v1/images/search')
@@ -319,6 +272,7 @@ def get_personURL(chat_id):
 
     url = r_json['url']
     return url"""
+
     url = requests.get("https://jsonplaceholder.typicode.com/users")
     text = url.text
 
