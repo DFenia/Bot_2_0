@@ -131,20 +131,17 @@ def get_text_messages(message):
 
 
         # ======================================= модуль ДЗ
-        elif ms_text == "Задание-1":
+        elif ms_text == "Возможность-1":
             DZ.dz1(bot, chat_id)
 
-        elif ms_text == "Задание-2":
+        elif ms_text == "Возможность-2":
             DZ.dz2(bot, chat_id)
 
-        elif ms_text == "Задание-3":
+        elif ms_text == "Возможность-3":
             DZ.dz3(bot, chat_id)
 
-        elif ms_text == "Задание-4/5":
-            DZ.dz45(bot, chat_id)
-
-        elif ms_text == "Задание-6":
-            DZ.dz6(bot, chat_id)
+        elif ms_text == "Возможность-4":
+            DZ.dz4(bot, chat_id)
 
 
         # ======================================= случайный текст
@@ -282,7 +279,6 @@ def get_personURL(chat_id):
     email = user['email']
     user_info = f"{user['name']}\n" + email
     bot.send_message(chat_id, text=user_info)
-
 
 
 bot.polling(none_stop=True, interval=0)
