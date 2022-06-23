@@ -1,10 +1,10 @@
-import json
-import bs4
-import telebot
+import json     #стандартизированный формат для хранения и обмена данными
+import bs4      #библиотекой Python для парсинга HTML и XML документов
+import telebot  #библиотекой для работы с Telegram
 from telebot import types
-import requests
-import DZ
-import menuBot
+import requests #библиотека для составления HTTP-запросов
+import DZ       #файл с кодом дополнительного модуля
+import menuBot  #файл с кодом дополнительного модуля
 from menuBot import Menu, Users
 import random
 
@@ -70,27 +70,6 @@ def get_messages(message):
     bot.send_message(message.chat.id, document)
     if message.document.mime_type == "video/mp4":
         bot.send_message(message.chat.id, "This is a GIF!")
-
-@bot.message_handler(content_types=['location'])
-def get_messages(message):
-    chat_id = message.chat.id
-    bot.send_message(chat_id, "Это " + message.content_type)
-
-    location = message.location
-    bot.send_message(message.chat.id, location)
-
-    from Weather import WeatherFromPyOWN
-    pyOWN = WeatherFromPyOWN()
-    bot.send_message(chat_id, pyOWN.getWeatherAtCoords(location.latitude, location.longitude))
-    bot.send_message(chat_id, pyOWN.getWeatherForecastAtCoords(location.latitude, location.longitude))
-
-@bot.message_handler(content_types=['contact'])
-def get_messages(message):
-    chat_id = message.chat.id
-    bot.send_message(chat_id, "Это " + message.content_type)
-
-    contact = message.contact
-    bot.send_message(message.chat.id, contact)
 
 
 @bot.message_handler(content_types=['text'])
@@ -261,12 +240,6 @@ def get_catURL():
 
 #---------------------------------------- модуль Случайный человек и почта
 def get_personURL(chat_id):
-    """url = ""
-    req = requests.get('https://api.thecatapi.com/v1/images/search')
-    r_json = json.loads(req.text)
-
-    url = r_json['url']
-    return url"""
 
     url = requests.get("https://jsonplaceholder.typicode.com/users")
     text = url.text
